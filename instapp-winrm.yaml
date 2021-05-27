@@ -1,0 +1,17 @@
+- hosts: all
+  remote_user: administrator
+  connection: winrm
+  gather_facts: yes
+  vars:
+    username: administrator
+  tasks:
+  - name: Ensure that WinRM is started when the system has settled
+    win_service:
+      name: WinRM
+      start_mode: delayed
+  - name: Reboot Windows Server
+    win_reboot:
+      reboot_timeout: 1200      
+  - name: Sleep for 1500 Seconds
+    wait_for: 
+      timeout: 1500
